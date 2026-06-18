@@ -23,7 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 import os
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+# Tenta ler do ambiente, se não encontrar, lança o erro propositalmente
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+if not SECRET_KEY:
+    raise Exception("SECRET_KEY não definida nas variáveis de ambiente")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False

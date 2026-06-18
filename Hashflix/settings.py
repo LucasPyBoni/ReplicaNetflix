@@ -63,7 +63,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Hashflix.urls'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -173,14 +182,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'xEcAM6qd4MByU4uaPBAZxeJnaSM'
 }
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True

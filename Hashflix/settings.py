@@ -61,6 +61,17 @@ cloudinary.config(
     api_secret=os.environ.get('CLOUDINARY_API_SECRET')
 )
 
+import logging
+logger = logging.getLogger(__name__)
+
+# Teste de configuração
+try:
+    import cloudinary
+    cloudinary.api.ping()
+    logger.info("Cloudinary configurado com sucesso!")
+except Exception as e:
+    logger.error(f"ERRO CRÍTICO NO CLOUDINARY: {e}")
+
 STORAGES = {
     "default": {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},

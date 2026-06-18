@@ -30,7 +30,7 @@ if not SECRET_KEY:
     raise Exception("SECRET_KEY não definida nas variáveis de ambiente")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['replicanetflix.onrender.com', 'localhost', '127.0.0.1']
 
@@ -96,11 +96,15 @@ WSGI_APPLICATION = 'Hashflix.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+import dj_database_url
+
+# Em produção, usaremos a DATABASE_URL do Render.
+# Em desenvolvimento local, você pode manter o SQLite.
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 import dj_database_url
@@ -176,9 +180,9 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'hwni7cgbp',
-    'API_KEY': '226816832747325',
-    'API_SECRET': 'xEcAM6qd4MByU4uaPBAZxeJnaSM'
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
 }
 
 

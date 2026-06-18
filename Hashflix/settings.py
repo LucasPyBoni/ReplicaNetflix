@@ -21,16 +21,42 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
+
 import os
+import dj_database_url
+import cloudinary
 
-# Tenta ler do ambiente, se não encontrar, lança o erro propositalmente
+# --- CONFIGURAÇÃO DE SEGURANÇA ---
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
 if not SECRET_KEY:
     raise Exception("SECRET_KEY não definida nas variáveis de ambiente")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # Sempre False em produção
+
+ALLOWED_HOSTS = ['replicanetflix.onrender.com', 'localhost', '127.0.0.1']
+
+# --- BANCO DE DADOS ---
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL", 'sqlite:///db.sqlite3'),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
+
+# --- CLOUDINARY ---
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+}
+
+cloudinary.config(
+    cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key = os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret = os.environ.get('CLOUDINARY_API_SECRET')
+)
 
 ALLOWED_HOSTS = ['replicanetflix.onrender.com', 'localhost', '127.0.0.1']
 
@@ -96,7 +122,6 @@ WSGI_APPLICATION = 'Hashflix.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 import dj_database_url
-import os
 
 # Isso buscará a DATABASE_URL que você definir no Dashboard do Render
 DATABASE_URL = os.environ.get("DATABASE_URL")
@@ -176,13 +201,6 @@ LOGIN_URL = 'filme:login'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
-}
-
 
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True

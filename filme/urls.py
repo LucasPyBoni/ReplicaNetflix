@@ -1,8 +1,7 @@
 # url - view - template
-from tempfile import template
+# url - view - template
 
-from django.urls import path, include, reverse_lazy
-from setuptools.extern import names
+from django.urls import path, reverse_lazy
 
 from .views import Homepage, Homefilmes, DetalhesView, PesquisaFilme, EditarPerfil, CriarConta
 from django.contrib.auth import views as auth_view

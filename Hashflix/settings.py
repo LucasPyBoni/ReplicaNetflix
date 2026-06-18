@@ -95,29 +95,27 @@ WSGI_APPLICATION = 'Hashflix.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-import dj_database_url
-
-# Em produção, usaremos a DATABASE_URL do Render.
-# Em desenvolvimento local, você pode manter o SQLite.
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600
-    )
-}
-
 import dj_database_url
 import os
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Isso buscará a DATABASE_URL que você definir no Dashboard do Render
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
             default=DATABASE_URL,
-            conn_max_age=1800
+            conn_max_age=600,
+            ssl_require=True # Neon e Render exigem SSL em produção
         )
+    }
+else:
+    # Fallback para desenvolvimento local
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
 
 

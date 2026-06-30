@@ -86,7 +86,7 @@ h1 {
 {% endblock %}
 
 {% block content %}
-
+{% if filme_destaque %}
   <main class='bg-primary_black min-h-screen w-full'>
         <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex items-end bg-cover" style="background-image: url('{{ filme_destaque.thumb.url }}');">
             <div>
@@ -230,4 +230,23 @@ h1 {
         </section>      
       
     </main>
+{% else %}
+
+<main class="bg-primary_black min-h-screen flex items-center justify-center">
+    <div class="text-center">
+        <h1 class="text-5xl text-white mb-4">
+            Hashflix
+        </h1>
+
+        <p class="text-gray-300 text-xl">
+            Nenhum filme cadastrado.
+        </p>
+
+        <p class="text-gray-500 mt-3">
+            Cadastre filmes pelo painel administrativo.
+        </p>
+    </div>
+</main>
+
+{% endif %}
 {% endblock %}

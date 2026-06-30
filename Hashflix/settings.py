@@ -10,9 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Segurança
 # ------------------------------------------------------------------------------
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
-if not SECRET_KEY:
-    raise Exception("SECRET_KEY não definida")
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-chave-temporaria-para-desenvolvimento"
+)
 
 DEBUG = False
 

@@ -17,7 +17,7 @@ SECRET_KEY = os.environ.get(
     "django-insecure-chave-temporaria-para-desenvolvimento"
 )
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "replicanetflix.onrender.com",

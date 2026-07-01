@@ -3,12 +3,13 @@ from .models import Filme, Usuario
 from django.views.generic import ListView, DetailView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CriarContaForm, AcessarForm
-from django.http import HttpResponseRedirect
 
+
+from django.http import HttpResponse
 
 class Homepage(FormView):
-    template_name = "homepage.html"
-    form_class = AcessarForm
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("Homepage funcionando")
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:

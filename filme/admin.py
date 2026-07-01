@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.utils.text import camel_case_to_spaces
 
 from .models import Filme, Episodio, Usuario
 from django.contrib.auth.admin import UserAdmin

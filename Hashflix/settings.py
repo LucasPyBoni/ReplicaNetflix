@@ -1,10 +1,12 @@
 import os
 from pathlib import Path
-
-import cloudinary
+from dotenv import load_dotenv
 import dj_database_url
+import cloudinary
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 # ------------------------------------------------------------------------------
 # Segurança
@@ -183,3 +185,5 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
